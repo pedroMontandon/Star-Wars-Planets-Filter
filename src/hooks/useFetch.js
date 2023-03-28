@@ -10,8 +10,7 @@ function useFetch() {
     });
     setData(results);
   };
-
-  return { data, fetchData };
+  return { data, fetchData, setData };
 }
 
 export default useFetch;
