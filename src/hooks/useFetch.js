@@ -1,8 +1,6 @@
 import { useState } from 'react';
 
 function useFetch() {
-  // const data = 0;
-
   const [data, setData] = useState('');
 
   const fetchData = async (url) => {
@@ -11,7 +9,6 @@ function useFetch() {
       delete planet.residents;
     });
     setData(results);
-    return results;
   };
 
   return { data, fetchData };

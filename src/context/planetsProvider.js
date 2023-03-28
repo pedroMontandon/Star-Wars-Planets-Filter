@@ -1,19 +1,18 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import useFetch from '../hooks/useFetch';
 import planetsProvider from './planetsContext';
 
 function Provider({ children }) {
-  const { fetchData } = useFetch();
-  const [planetsState, setPlanetsState] = useState('');
+  const { fetchData, data } = useFetch();
 
   useEffect(() => {
-    const planets = fetchData('https://swapi.dev/api/planets');
-    setPlanetsState(planets);
+    fetchData('https://swapi.dev/api/planets');
   }, []);
 
   return (
-    <planetsProvider.Provider value={ { planetsState, setPlanetsState } }>
+    <planetsProvider.Provider value={ { data } }>
       { children }
     </planetsProvider.Provider>
   );
