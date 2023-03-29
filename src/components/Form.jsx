@@ -2,13 +2,19 @@ import { useContext, useEffect, useState } from 'react';
 import planetContext from '../context/planetsContext';
 
 function Form() {
+  const { setNameInput, setTypesInput, typesInput,
+    setSortedData } = useContext(planetContext);
+
   const [nameSearch, setNameSearch] = useState('');
   const [numberInput, setNumberInput] = useState(0);
   const [comparisonInput, setComparisonInput] = useState('maior que');
   const [typesArray, setTypesArray] = useState(['population', 'orbital_period',
     'diameter', 'rotation_period', 'surface_water']);
   const [typeSearch, setTypeSearch] = useState(typesArray[0]);
-  const { setNameInput, setTypesInput, typesInput } = useContext(planetContext);
+  const [sortConfig, setSortConfig] = useState({ order: {
+    column: 'population', sort: 'ASC' } });
+  const sortTypesArray = ['population', 'orbital_period',
+    'diameter', 'rotation_period', 'surface_water'];
 
   useEffect(() => {
     setTypeSearch(typesArray[0]);
@@ -49,9 +55,9 @@ function Form() {
         data-testid="name-filter"
       />
       <select
-        data-testid="column-filter"
         value={ typeSearch }
         onChange={ (e) => setTypeSearch(e.target.value) }
+        data-testid="column-filter"
       >
         {typesArray.map((type) => <option key={ type } value={ type }>{type}</option>)}
       </select>
@@ -97,6 +103,51 @@ function Form() {
           data-testid="button-remove-filters"
         >
           Remover Filtros
+        </button>
+      </div>
+      <div>
+        <select
+          name="typeSort"
+          onChange={ (e) => setSortConfig(
+            { order: { ...sortConfig.order, column: e.target.value } },
+          ) }
+          data-testid="column-sort"
+        >
+          {sortTypesArray
+            .map((type) => <option key={ type } value={ type }>{type}</option>)}
+        </select>
+        <label htmlFor="asc">
+          Ascendente
+          <input
+            type="radio"
+            name="sortDirection"
+            id="asc"
+            value="ASC"
+            onClick={ (e) => setSortConfig(
+              { order: { ...sortConfig.order, sort: e.target.value } },
+            ) }
+            data-testid="column-sort-input-asc"
+          />
+        </label>
+        <label htmlFor="desc">
+          Descendente
+          <input
+            type="radio"
+            name="sortDirection"
+            id="desc"
+            value="DESC"
+            onClick={ (e) => setSortConfig(
+              { order: { ...sortConfig.order, sort: e.target.value } },
+            ) }
+            data-testid="column-sort-input-desc"
+          />
+        </label>
+        <button
+          type="button"
+          onClick={ () => setSortedData(sortConfig) }
+          data-testid="column-sort-button"
+        >
+          Ordenar
         </button>
       </div>
     </div>
