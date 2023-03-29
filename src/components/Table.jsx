@@ -43,9 +43,9 @@ function Table() {
           {filteredPlanets && sortedPlanets.map((planet, c) => (
             <tr key={ c }>
               {Object.values(planet).map((info, i) => (
-                <th key={ i } data-testid={ i === 0 && 'planet-name' }>
+                <td key={ i } data-testid={ i === 0 && 'planet-name' }>
                   {info}
-                </th>))}
+                </td>))}
             </tr>))}
         </thead>
       </table>
