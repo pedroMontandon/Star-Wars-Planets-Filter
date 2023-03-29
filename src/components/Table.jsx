@@ -18,10 +18,10 @@ function Table() {
 
   return (
     <div>
-      <div>
+      {/* <div>
         {typesInput && typesInput
           .map((type, i) => <div key={ i }>{Object.values(type)}</div>)}
-      </div>
+      </div> */}
       <h1>Table</h1>
       <table>
         <thead>

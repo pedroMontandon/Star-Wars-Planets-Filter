@@ -8,10 +8,7 @@ function Form() {
   const [typesArray, setTypesArray] = useState(['population', 'orbital_period',
     'diameter', 'rotation_period', 'surface_water']);
   const [typeSearch, setTypeSearch] = useState(typesArray[0]);
-  const [hiddenTypes, setHiddenTypes] = ('');
   const { setNameInput, setTypesInput, typesInput } = useContext(planetContext);
-  // const typesArray = ['population', 'orbital_period', 'diameter', 'rotation_period',
-  //   'surface_water'];
 
   useEffect(() => {
     setTypeSearch(typesArray[0]);
@@ -24,12 +21,21 @@ function Form() {
 
   const handleTypeFilter = () => {
     setTypesArray(typesArray.filter((type) => type !== typeSearch));
-    // setTypeSearch(typesArray[0]);
-    // setHiddenTypes(hiddenTypes ? [...hiddenTypes, typeSearch] : [typeSearch]);
 
     setTypesInput([...typesInput, { type: typeSearch,
       comparison: comparisonInput,
       number: numberInput }]);
+  };
+
+  const removeFilter = ({ target: { name } }) => {
+    setTypesInput(typesInput.filter(({ type }) => type !== name));
+    setTypesArray([...typesArray, name]);
+  };
+
+  const removeAllFilters = () => {
+    setTypesInput('');
+    setTypesArray(['population', 'orbital_period',
+      'diameter', 'rotation_period', 'surface_water']);
   };
 
   return (
@@ -72,6 +78,27 @@ function Form() {
       >
         Filter by Number
       </button>
+      <div>
+        {typesInput && typesInput
+          .map((type, i) => (
+            <div key={ i } data-testid="filter">
+              <span>{Object.values(type)}</span>
+              <button
+                type="button"
+                onClick={ removeFilter }
+                name={ type.type }
+              >
+                &#128465;
+              </button>
+            </div>))}
+        <button
+          type="button"
+          onClick={ removeAllFilters }
+          data-testid="button-remove-filters"
+        >
+          Remover Filtros
+        </button>
+      </div>
     </div>
   );
 }
