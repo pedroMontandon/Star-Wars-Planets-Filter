@@ -6,7 +6,7 @@ function Form() {
   const [typeSearch, setTypeSearch] = useState('population');
   const [numberInput, setNumberInput] = useState(0);
   const [comparisonInput, setComparisonInput] = useState('maior que');
-  const { setNameInput, setTypesInput } = useContext(planetContext);
+  const { setNameInput, setTypesInput, typesInput } = useContext(planetContext);
 
   const filterByName = ({ target: { value } }) => {
     setNameSearch(value);
@@ -52,13 +52,12 @@ function Form() {
       />
       <button
         type="button"
-        onClick={ () => setTypesInput({ type: typeSearch,
+        onClick={ () => setTypesInput([...typesInput, { type: typeSearch,
           comparison: comparisonInput,
-          number: numberInput }) }
+          number: numberInput }]) }
         data-testid="button-filter"
       >
         Filter by Number
-
       </button>
     </div>
   );
