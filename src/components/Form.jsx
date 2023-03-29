@@ -93,6 +93,7 @@ function Form() {
                 type="button"
                 onClick={ removeFilter }
                 name={ type.type }
+                data-testid={ `remove-button-${type.type}` }
               >
                 &#128465;
               </button>
