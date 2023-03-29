@@ -1,16 +1,35 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import planetContext from '../context/planetsContext';
 
 function Form() {
   const [nameSearch, setNameSearch] = useState('');
-  const [typeSearch, setTypeSearch] = useState('population');
   const [numberInput, setNumberInput] = useState(0);
   const [comparisonInput, setComparisonInput] = useState('maior que');
+  const [typesArray, setTypesArray] = useState(['population', 'orbital_period',
+    'diameter', 'rotation_period', 'surface_water']);
+  const [typeSearch, setTypeSearch] = useState(typesArray[0]);
+  const [hiddenTypes, setHiddenTypes] = ('');
   const { setNameInput, setTypesInput, typesInput } = useContext(planetContext);
+  // const typesArray = ['population', 'orbital_period', 'diameter', 'rotation_period',
+  //   'surface_water'];
+
+  useEffect(() => {
+    setTypeSearch(typesArray[0]);
+  }, [setTypeSearch, typesArray]);
 
   const filterByName = ({ target: { value } }) => {
     setNameSearch(value);
     setNameInput(value);
+  };
+
+  const handleTypeFilter = () => {
+    setTypesArray(typesArray.filter((type) => type !== typeSearch));
+    // setTypeSearch(typesArray[0]);
+    // setHiddenTypes(hiddenTypes ? [...hiddenTypes, typeSearch] : [typeSearch]);
+
+    setTypesInput([...typesInput, { type: typeSearch,
+      comparison: comparisonInput,
+      number: numberInput }]);
   };
 
   return (
@@ -28,11 +47,7 @@ function Form() {
         value={ typeSearch }
         onChange={ (e) => setTypeSearch(e.target.value) }
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        {typesArray.map((type) => <option key={ type } value={ type }>{type}</option>)}
       </select>
       <select
         value={ comparisonInput }
@@ -52,9 +67,7 @@ function Form() {
       />
       <button
         type="button"
-        onClick={ () => setTypesInput([...typesInput, { type: typeSearch,
-          comparison: comparisonInput,
-          number: numberInput }]) }
+        onClick={ handleTypeFilter }
         data-testid="button-filter"
       >
         Filter by Number

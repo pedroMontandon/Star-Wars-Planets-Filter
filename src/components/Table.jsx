@@ -5,17 +5,6 @@ function Table() {
   const { data, nameInput, typesInput } = useContext(planetsContext);
   const tableHeader = data && Object.keys(data[0]);
 
-  // const filteredPlanets = data && data.filter(({ name }) => name.includes(nameInput));
-  // const filteredPlanets = data && data.filter(({ name }) => name.includes(nameInput))
-  //   .filter((planet) => {
-  //     const { type, number, comparison } = typesInput;
-  //     if (!typesInput) return planet;
-
-  // if (typesInput.comparison === 'maior que') return (planet[type] > Number(number));
-  // if (comparison === 'menor que') return (planet[type] < Number(number));
-  // return (planet[type] === number);
-  //   });
-
   const filteredPlanets = data && data.filter(({ name }) => name.includes(nameInput));
   const filteredByTypes = !typesInput ? filteredPlanets : typesInput
     .reduce((acc, { type, number, comparison }) => {
@@ -24,7 +13,6 @@ function Table() {
         if (comparison === 'menor que') return (planet[type] < Number(number));
         return (planet[type] === number);
       });
-      console.log(acc);
       return acc;
     }, [...filteredPlanets]);
 
