@@ -7,13 +7,21 @@ import planetsProvider from './planetsContext';
 function Provider({ children }) {
   const { fetchData, data, setData } = useFetch();
   const [nameInput, setNameInput] = useState('');
+  const [typesInput, setTypesInput] = useState('');
 
   useEffect(() => {
     fetchData('https://swapi.dev/api/planets');
   }, []);
 
   return (
-    <planetsProvider.Provider value={ { data, setData, nameInput, setNameInput } }>
+    <planetsProvider.Provider
+      value={ { data,
+        setData,
+        nameInput,
+        setNameInput,
+        typesInput,
+        setTypesInput } }
+    >
       { children }
     </planetsProvider.Provider>
   );
