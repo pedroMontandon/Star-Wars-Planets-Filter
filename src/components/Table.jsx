@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import planetsContext from '../context/planetsContext';
+import rectifyingWords from '../helpers/rectifyingWords';
 
 function Table() {
   const { data, nameInput, typesInput, sortedData } = useContext(planetsContext);
@@ -33,17 +34,21 @@ function Table() {
     }, []);
 
   return (
-    <div>
-      <h1>Table</h1>
+    <div className="bg-indigo-200/30 rounded-lg p-3 m-5">
       <table>
         <thead>
           <tr>
-            {data && tableHeader.map((header, i) => <th key={ i }>{header}</th>)}
+            {data && tableHeader.map((header, i) => (
+              <th key={ i } className="p-2">{rectifyingWords(header)}</th>))}
           </tr>
           {filteredPlanets && sortedPlanets.map((planet, c) => (
-            <tr key={ c }>
+            <tr key={ c } className="hover:bg-indigo-300/50">
               {Object.values(planet).map((info, i) => (
-                <td key={ i } data-testid={ i === 0 && 'planet-name' }>
+                <td
+                  key={ i }
+                  data-testid={ i === 0 && 'planet-name' }
+                  className="p-2 text-center"
+                >
                   {info}
                 </td>))}
             </tr>))}
