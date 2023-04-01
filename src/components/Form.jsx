@@ -4,8 +4,7 @@ import rectifyingWords from '../helpers/rectifyingWords';
 import translate from '../helpers/translateIntoEnglish';
 
 function Form() {
-  const { setNameInput, setTypesInput, typesInput,
-    setSortedData } = useContext(planetContext);
+  const { setNameInput, setTypesInput, typesInput } = useContext(planetContext);
 
   const [nameSearch, setNameSearch] = useState('');
   const [numberInput, setNumberInput] = useState(0);
@@ -13,10 +12,6 @@ function Form() {
   const [typesArray, setTypesArray] = useState(['population', 'orbital_period',
     'diameter', 'rotation_period', 'surface_water']);
   const [typeSearch, setTypeSearch] = useState(typesArray[0]);
-  const [sortConfig, setSortConfig] = useState({ order: {
-    column: 'population', sort: 'ASC' } });
-  const sortTypesArray = ['population', 'orbital_period',
-    'diameter', 'rotation_period', 'surface_water'];
 
   useEffect(() => {
     setTypeSearch(typesArray[0]);
@@ -126,57 +121,6 @@ function Form() {
                 &#128465;
               </button>
             </div>))}
-      </div>
-      <div className="flex flex-row">
-        <select
-          name="typeSort"
-          onChange={ (e) => setSortConfig(
-            { order: { ...sortConfig.order, column: e.target.value } },
-          ) }
-          data-testid="column-sort"
-          className=" bg-indigo-300 p-1 m-1 rounded-md"
-        >
-          {sortTypesArray.map((type) => (
-            <option key={ type } value={ type }>{rectifyingWords(type)}</option>))}
-        </select>
-        <section className="flex flex-col">
-          <label htmlFor="asc" className="mx-2 font-semibold">
-            Upward
-            <input
-              type="radio"
-              name="sortDirection"
-              id="asc"
-              value="ASC"
-              onClick={ (e) => setSortConfig(
-                { order: { ...sortConfig.order, sort: e.target.value } },
-              ) }
-              data-testid="column-sort-input-asc"
-              className="mx-1"
-            />
-          </label>
-          <label htmlFor="desc" className="mx-2 font-semibold">
-            Downward
-            <input
-              type="radio"
-              name="sortDirection"
-              id="desc"
-              value="DESC"
-              onClick={ (e) => setSortConfig(
-                { order: { ...sortConfig.order, sort: e.target.value } },
-              ) }
-              data-testid="column-sort-input-desc"
-              className="mx-1"
-            />
-          </label>
-        </section>
-        <button
-          type="button"
-          onClick={ () => setSortedData(sortConfig) }
-          data-testid="column-sort-button"
-          className="bg-yellow-300 px-2 py-1 rounded-md m-2 font-bold hover:bg-yellow-600"
-        >
-          Sort
-        </button>
       </div>
     </div>
   );

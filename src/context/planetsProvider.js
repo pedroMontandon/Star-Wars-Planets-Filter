@@ -9,6 +9,8 @@ function Provider({ children }) {
   const [nameInput, setNameInput] = useState('');
   const [typesInput, setTypesInput] = useState('');
   const [sortedData, setSortedData] = useState('');
+  const [sortConfig, setSortConfig] = useState({ order: {
+    column: 'population', sort: 'ASC' } });
 
   useEffect(() => {
     fetchData('https://swapi.dev/api/planets');
@@ -23,7 +25,9 @@ function Provider({ children }) {
         typesInput,
         setTypesInput,
         sortedData,
-        setSortedData } }
+        setSortedData,
+        sortConfig,
+        setSortConfig } }
     >
       { children }
     </planetsProvider.Provider>

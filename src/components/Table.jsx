@@ -1,9 +1,11 @@
 import React, { useContext } from 'react';
 import planetsContext from '../context/planetsContext';
 import rectifyingWords from '../helpers/rectifyingWords';
+import sortByClick from '../helpers/sortByHeaderClick';
 
 function Table() {
-  const { data, nameInput, typesInput, sortedData } = useContext(planetsContext);
+  const { data, nameInput, typesInput, sortedData,
+    setSortedData } = useContext(planetsContext);
   const tableHeader = data && Object.keys(data[0]);
 
   const filteredPlanets = data && data.filter(({ name }) => name.includes(nameInput));
@@ -37,9 +39,19 @@ function Table() {
     <div className="bg-indigo-200/30 rounded-lg p-3 m-5">
       <table>
         <thead>
-          <tr>
+          <tr
+            onClick={ ({ target: { id } }) => (
+              setSortedData(sortByClick(sortedData, id))) }
+          >
             {data && tableHeader.map((header, i) => (
-              <th key={ i } className="p-2">{rectifyingWords(header)}</th>))}
+              <th
+                key={ i }
+                id={ header }
+                className="p-3 border-b-2
+                border-b-indigo-300 hover:cursor-pointer"
+              >
+                {rectifyingWords(header)}
+              </th>))}
           </tr>
           {filteredPlanets && sortedPlanets.map((planet, c) => (
             <tr key={ c } className="hover:bg-indigo-300/50">
@@ -47,7 +59,7 @@ function Table() {
                 <td
                   key={ i }
                   data-testid={ i === 0 && 'planet-name' }
-                  className="p-2 text-center"
+                  className="p-3 text-center"
                 >
                   {info}
                 </td>))}
