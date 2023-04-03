@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import planetsContext from '../context/planetsContext';
 import rectifyingWords from '../helpers/rectifyingWords';
 import sortByClick from '../helpers/sortByHeaderClick';
+import arrowFunction from '../helpers/arrowFunction';
 
 function Table() {
   const { data, nameInput, typesInput, sortedData,
@@ -50,6 +51,12 @@ function Table() {
                 className="p-3 border-b-2
                 border-b-indigo-300 hover:cursor-pointer"
               >
+                <span
+                  className="text-yellow-300 font-bold"
+                >
+                  {arrowFunction(sortedData, header)}
+
+                </span>
                 {rectifyingWords(header)}
               </th>))}
           </tr>
